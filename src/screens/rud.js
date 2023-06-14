@@ -13,7 +13,7 @@ const Manipulation = () => {
   };
 
   const fetchData = () => {
-    fetch(`http://192.168.0.102:3000/maquina/${searchText}`)
+    fetch(`http://192.168.0.105:3000/maquina/${searchText}`)
       .then((res) => res.json())
       .then((result) => {
         setData(result);
