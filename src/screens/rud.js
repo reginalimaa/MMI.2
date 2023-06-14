@@ -54,7 +54,6 @@ const Manipulation = () => {
               <Text>Localização: {data.localizacao}</Text>
             </View>
           )}
-        
       </View>
     </>
   );
