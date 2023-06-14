@@ -13,7 +13,7 @@ const Teste = () => {
     };
   
     const fetchData = () => {
-      fetch(`http://172.26.36.227:3000/maquina/${searchText}`)
+      fetch(`http://192.168.0.105:3000/maquina/${searchText}`)
         .then((res) => res.json())
         .then((result) => {
           setData(result);
@@ -24,7 +24,7 @@ const Teste = () => {
     };
 
     const editData = () => {
-      fetch('http://172.26.36.227:3000/update', {
+      fetch('http://192.168.0.105:3000/update', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const Teste = () => {
     };
     
     const deleteData = () => {
-      fetch('http://172.26.36.227:3000/delete', {
+      fetch('http://192.168.1.9:3000/delete', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',

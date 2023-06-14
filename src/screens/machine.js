@@ -11,12 +11,8 @@ import { TextInput } from 'react-native-paper';
 import HeaderContent from '../components/header';
 import CustomText from '../components/text';
 import Button from '../components/button';
-import { Alert } from 'react-native';
-
-import { useNavigation } from '@react-navigation/native';
 
 const CreateMachine = () => {
-    const navigation = useNavigation();
 
     const [nome, setNome] = useState('');
     const [capacidade, setCapacidade] = useState('');
@@ -28,26 +24,8 @@ const CreateMachine = () => {
     const [localizacao, setLocalizacao] = useState('');
     const [enableshift, setenableShift] = useState(false);
 
-    const handleCadastrar = () => {
-        if (
-          nome === '' || 
-          capacidade === '' ||
-          dataCompra === '' ||
-          tempoVida === '' ||
-          descricao === '' ||
-          fornecedor === '' ||
-          marca === '' ||
-          localizacao === ''
-        ) {
-          Alert.alert('Todos os campos devem ser preenchidos');
-        } else {
-          submitData();
-          navigation.navigate('Homee');
-        }
-      };
-    
     const submitData = () => {
-        fetch('http://172.26.36.227:3000/send-data', {
+        fetch('http://192.168.0.102:3000/send-data', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
@@ -66,7 +44,7 @@ const CreateMachine = () => {
           .then((res) => res.json())
           .then((data) => {
             Alert.alert(`${data.name} Máquina cadastrada com sucesso!`);
-            navigation.navigate('Homee');
+            navigation.navigate('Home');
           })
           .catch((err) => {
             Alert.alert('alguma coisa deu errado' + err);
@@ -169,7 +147,7 @@ const CreateMachine = () => {
                                     onChangeText={(text) => setLocalizacao(text)}
                                 />
                             </KeyboardAvoidingView>
-                            <Button label='Cadastrar' onPress={() => { handleCadastrar(); navigation.navigate('Homee');}} />
+                            <Button label='Cadastrar' onPress={submitData}/>
                         </ScrollView>
                     </View>
                 </View>
