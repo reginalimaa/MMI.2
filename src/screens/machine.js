@@ -47,7 +47,7 @@ const CreateMachine = () => {
       };
     
     const submitData = () => {
-        fetch('http://172.26.36.227:3000/send-data', {
+        fetch('http://192.168.0.100:3000/send-data', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
@@ -158,7 +158,7 @@ const CreateMachine = () => {
                                     mode="outlined"
                                     onChangeText={(text) => setMarca(text)}
                                 />
-                                <TextInput
+                                 <TextInput
                                     label="Localização"
                                     style={styles.inputStyle}
                                     value={localizacao}
@@ -169,7 +169,10 @@ const CreateMachine = () => {
                                     onChangeText={(text) => setLocalizacao(text)}
                                 />
                             </KeyboardAvoidingView>
-                            <Button label='Cadastrar' onPress={() => { handleCadastrar(); navigation.navigate('Homee');}} />
+                            <Button 
+                              label='Cadastrar' 
+                              onPress={() => { handleCadastrar(); navigation.navigate('Homee');}} 
+                            />
                         </ScrollView>
                     </View>
                 </View>

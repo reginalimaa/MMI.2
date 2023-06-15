@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, View, Text, FlatList, Alert, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, FlatList, Alert } from 'react-native';
 import { Card, FAB } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -8,13 +8,12 @@ import HeaderContent from '../components/header';
 
 const Homee = () => {
   const navigation = useNavigation();
- 
 
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.maquina);
 
   const fetchData = () => {
-    fetch('http://172.26.36.227:3000/')
+    fetch('http://192.168.0.100:3000/')
       .then((res) => res.json())
       .then((results) => {
         dispatch({ type: 'ADD_DATA', payload: results });
@@ -29,32 +28,33 @@ const Homee = () => {
     fetchData();
   }, []);
 
+  const handleEditOrDelete = (id) => {
+    navigation.navigate('UpdateAndDelete', { machineId: id }); // Renomeei o parâmetro para `machineId`
+  };
+
   const renderCard = ({ item }) => {
     return (
-
-        <Card style={styles.card}>
-          <Card.Title title={`ID: ${item._id}`} />
-          <Card.Content>
-            <Text>Nome: {item.nome}</Text>
-            <Text>Localização: {item.localizacao}</Text>
-          </Card.Content>
-        </Card>
-     
+      <Card style={styles.card} onPress={() => handleEditOrDelete(item._id)}>
+        <Card.Title title={`ID: ${item._id}`} />
+        <Card.Content>
+          <Text>Nome: {item.nome}</Text>
+          <Text>Localização: {item.localizacao}</Text>
+        </Card.Content>
+      </Card>
     );
   };
 
   return (
     <View style={styles.container}>
       <HeaderContent />
-     
       <View style={styles.cardContainer}>
-          <FlatList
-            data={data}
-            renderItem={renderCard}
-            keyExtractor={(item) => item._id}
-            onRefresh={fetchData}
-            refreshing={loading || false}
-          />
+        <FlatList
+          data={data}
+          renderItem={renderCard}
+          keyExtractor={(item) => item._id}
+          onRefresh={fetchData}
+          refreshing={loading || false}
+        />
       </View>
 
       <FAB
@@ -63,7 +63,6 @@ const Homee = () => {
         onPress={() => navigation.navigate('CreateMachine')}
         theme={{ colors: { accent: '#00BF63' } }}
       />
-     
     </View>
   );
 };
