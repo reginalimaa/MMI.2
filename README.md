@@ -8,7 +8,6 @@ Os problemas observados impactam diretamente os processos conduzidos pelos equip
 
 Assim, para atender as demandas do setor, a equipe desenvolverá o sistema em questão utilizando as seguintes tecnologias:
 
-- Linguagem de marcação: **HTML**
 - Mecanismo de estilização: **CSS**
 - Linguagem de programação Front-End: **React Native**
 - Linguagem de programação Back-End: **Node.js**
