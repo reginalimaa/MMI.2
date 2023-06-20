@@ -4,12 +4,15 @@ import { View,
          Text, 
          TouchableOpacity, 
          TextInput,
-         Alert
+         Alert,
+         KeyboardAvoidingView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import HeaderContent from '../components/header';
 import { useNavigation } from '@react-navigation/native';
+import CustomText from '../components/text';
+import Button from '../components/button';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const UpdateAndDelete = ({ route }) => {
   const navigation = useNavigation();
@@ -24,10 +27,11 @@ const UpdateAndDelete = ({ route }) => {
   const [fornecedor, setFornecedor] = useState('');
   const [marca, setMarca] = useState('');
   const [localizacao, setLocalizacao] = useState('');
+  const [enableshift, setenableShift] = useState(false);
 
 
   useEffect(() => {
-    fetch(`http://192.168.0.100:3000/maquina/${machineId}`)
+    fetch(`http://192.168.0.106:3000/maquina/${machineId}`)
       .then((res) => res.json())
       .then((result) => {
         setMachineData(result);
@@ -47,7 +51,7 @@ const UpdateAndDelete = ({ route }) => {
 
 
   const handleEditMachine = (nome, capacidade, dataCompra, tempoVida, descricao, fornecedor, marca, localizacao) => {
-    fetch('http://192.168.0.100:3000/update', {
+    fetch('http://192.168.0.106:3000/update', {
       method: 'put',
       headers: {
         'Content-Type': 'application/json',
@@ -66,8 +70,8 @@ const UpdateAndDelete = ({ route }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        Alert.alert(`${data.name} foi editado com sucesso!`);
-        navigation.navigate('Home');
+        Alert.alert(`editado com sucesso!`);
+        navigation.navigate('Homee');
       })
       .catch((err) => {
         Alert.alert('Alguma coisa deu errado');
@@ -75,7 +79,7 @@ const UpdateAndDelete = ({ route }) => {
   };
 
   const handleDeleteMachine = () => {
-    fetch("http://192.168.0.100:3000/delete", {
+    fetch("http://192.168.0.106:3000/delete", {
       method: "delete",
       headers: {
         'Content-Type': 'application/json'
@@ -100,77 +104,95 @@ const UpdateAndDelete = ({ route }) => {
       </View>
     );
   }
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <HeaderContent />
       </View>
 
-      <View style={styles.card}>
+      <View style={{ ...styles.formSection, paddingTop: 4 }}>
         {machineData && (
           <>
-            <Text>ID: {machineData._id}</Text>
-            <TextInput
-              style={styles.input}
-              value={nome}
-              onChangeText={setNome}
-              placeholder="Nome"
-            />
-            <TextInput
-              style={styles.input}
-              value={capacidade}
-              onChangeText={setCapacidade}
-              placeholder="Capacidade"
-            />
-            <TextInput
-              style={styles.input}
-              value={dataCompra}
-              onChangeText={setDataCompra}
-              placeholder="Data de Compra"
-            />
-            <TextInput
-              style={styles.input}
-              value={tempoVida}
-              onChangeText={setTempoVida}
-              placeholder="Tempo de Vida"
-            />
-            <TextInput
-              style={styles.input}
-              value={descricao}
-              onChangeText={setDescricao}
-              placeholder="Descrição"
-            />
-            <TextInput
-              style={styles.input}
-              value={fornecedor}
-              onChangeText={setFornecedor}
-              placeholder="Fornecedor"
-            />
-            <TextInput
-              style={styles.input}
-              value={marca}
-              onChangeText={setMarca}
-              placeholder="Marca"
-            />
-            <TextInput
-              style={styles.input}
-              value={localizacao}
-              onChangeText={setLocalizacao}
-              placeholder="Localização"
-            />
+            <ScrollView>
+            <CustomText text={'Altere ou delete dados'}/>
+            <Text style={styles.inputStyle}>ID: {machineData._id}</Text>
+            <KeyboardAvoidingView
+            behavior="padding"
+            style={styles.root}
+            enabled={enableshift}
+            >
+              <TextInput
+                style={styles.inputStyle}
+                value={nome}
+                onFocus={() => setenableShift(false)}
+                keyboardType="ascii-capable"
+                onChangeText={setNome}
+                mode="outlined"
+                placeholder="Nome"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={capacidade}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setCapacidade}
+                placeholder="Capacidade"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={dataCompra}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setDataCompra}
+                placeholder="Data de Compra"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={tempoVida}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setTempoVida}
+                placeholder="Tempo de Vida"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={descricao}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setDescricao}
+                placeholder="Descrição"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={fornecedor}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setFornecedor}
+                placeholder="Fornecedor"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={marca}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setMarca}
+                placeholder="Marca"
+              />
+              <TextInput
+                style={styles.inputStyle}
+                value={localizacao}
+                onFocus={() => setenableShift(false)}
+                onChangeText={setLocalizacao}
+                placeholder="Localização"
+              />
+            </KeyboardAvoidingView>
+            </ScrollView>
           </>
         )}
-      </View>
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button} onPress={() => { 
+        <View styl e={styles.buttonContainer}>
+        <Button 
+          label='Deletar'
+          onPress={() => { 
           handleDeleteMachine(); 
           navigation.navigate('Homee');}}>
-          <Text>Deletar</Text>
-        </TouchableOpacity>
+        </Button>
 
-        <TouchableOpacity
-            style={styles.button}
+        <Button
+            label='Editar'
             onPress={() =>
               handleEditMachine(
                 nome,
@@ -184,9 +206,10 @@ const UpdateAndDelete = ({ route }) => {
               )
             }
           >
-          <Text>Editar</Text>
-        </TouchableOpacity>
+        </Button>
       </View>
+      </View>
+      
     </View>
   );
 };
@@ -209,12 +232,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 40,
+    width: 120,
     height: 40,
     borderRadius: 5,
+    marginHorizontal: 10
   },
+  inputStyle: {
+    margin: 5,
+    backgroundColor: 'white',
+    color: 'black',
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+},
   card: {
-
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: 'gray',
@@ -225,7 +256,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 10,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    marginBottom: 16,
   },
   button: {
     backgroundColor: 'lightgray',
@@ -235,6 +270,11 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 5,
     marginHorizontal: 10,
+  },
+  formSection:{
+    paddingTop: 60,
+    padding: 16,
+    flex: 1,
   },
 });
 

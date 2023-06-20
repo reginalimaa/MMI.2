@@ -47,7 +47,7 @@ const CreateMachine = () => {
       };
     
     const submitData = () => {
-        fetch('http://192.168.0.100:3000/send-data', {
+        fetch('http://192.168.0.106:3000/send-data', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const CreateMachine = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            Alert.alert(`${data.name} Máquina cadastrada com sucesso!`);
+            Alert.alert(`Máquina cadastrada com sucesso!`);
             navigation.navigate('Homee');
           })
           .catch((err) => {

@@ -13,7 +13,7 @@ const Homee = () => {
   const { data, loading } = useSelector((state) => state.maquina);
 
   const fetchData = () => {
-    fetch('http://192.168.0.100:3000/')
+    fetch('http://192.168.0.106:3000/')
       .then((res) => res.json())
       .then((results) => {
         dispatch({ type: 'ADD_DATA', payload: results });
@@ -29,7 +29,7 @@ const Homee = () => {
   }, []);
 
   const handleEditOrDelete = (id) => {
-    navigation.navigate('UpdateAndDelete', { machineId: id }); // Renomeei o parâmetro para `machineId`
+    navigation.navigate('UpdateAndDelete', { machineId: id });
   };
 
   const renderCard = ({ item }) => {
@@ -46,7 +46,9 @@ const Homee = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderContent />
+      <View style={styles.header}>
+        <HeaderContent />
+      </View>
       <View style={styles.cardContainer}>
         <FlatList
           data={data}
@@ -70,11 +72,20 @@ const Homee = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+  },
+  header: {
+    width: "100%",
+    height: 87,
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#000",
+    paddingHorizontal: 18,
+    gap: 8
   },
   cardContainer: {
-    marginTop: 130, // Altura do headerContent
+    marginTop: 10, // Altura do headerContent
     marginBottom: 10,
+    padding: 10,
   },
   card: {
     marginVertical: 10,
